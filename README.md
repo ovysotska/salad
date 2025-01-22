@@ -53,7 +53,7 @@ python3 eval.py --ckpt_path 'weights/dino_salad.ckpt' --image_size 322 322 --bat
 To compute the descriptors for images:
 
 ```bash
-python compute_descriptors.py  --img_dir img_dir --output_file output_file.txt  --image_size 308 168 --batch_size 1
+python compute_descriptors.py --ckpt_path weights/dino_salad.ckpt --img_dir img_dir --output_file output_file.txt  --image_size 308 168 --batch_size 1
 ```
 
 <table>
