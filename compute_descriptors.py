@@ -89,16 +89,8 @@ def load_model(ckpt_path):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Eval VPR model",
+        description="Compute salad features",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    # Model parameters
-    parser.add_argument(
-        "--ckpt_path",
-        type=str,
-        required=True,
-        default=None,
-        help="Path to the checkpoint",
     )
     parser.add_argument("--img_dir", type=Path, required=True)
     parser.add_argument("--output_file", type=Path, required=True)
@@ -132,7 +124,13 @@ if __name__ == "__main__":
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Using {device} device")
-    model = load_model(args.ckpt_path)
+    ckpt_path = Path("weights/dino_salad.ckpt")
+
+    if not ckpt_path.exists():
+        print("ERROR: No weights. Please download the pretrained DINOv2 SALAD model into folder weights/. Check readme.")
+        exit()
+
+    model = load_model(ckpt_path)
 
     # Initialize dataset
     input_transform = set_input_transform(args.image_size)
@@ -146,7 +144,7 @@ if __name__ == "__main__":
         pin_memory=True,
     )
 
-    descriptors = get_descriptors(model, dataset_loader, "cuda")
+    descriptors = get_descriptors(model, dataset_loader, device)
 
     print("Descriptors", descriptors.shape)
     np.savetxt(args.output_file, descriptors)
