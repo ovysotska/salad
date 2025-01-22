@@ -50,6 +50,12 @@ You can download a pretrained DINOv2 SALAD model from [here](https://drive.googl
 python3 eval.py --ckpt_path 'weights/dino_salad.ckpt' --image_size 322 322 --batch_size 256 --val_datasets MSLS Nordland
 ```
 
+To compute the descriptors for images:
+
+```bash
+python compute_descriptors.py --ckpt_path weights/dino_salad.ckpt  --img_dir img_dir --output_file output_file.txt --batch_size  512   --image_size 308 168 --batch_size 1
+```
+
 <table>
 <thead>
   <tr>
